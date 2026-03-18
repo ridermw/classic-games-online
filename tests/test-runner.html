@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classic Games Online — Test Runner</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0B1120; color: #FFFFFF; font-family: 'Courier New', monospace; padding: 20px; }
+    h1 { color: #E8294A; margin-bottom: 10px; font-size: 1.4em; }
+    .summary { padding: 12px 16px; margin: 12px 0; border-radius: 6px; font-weight: bold; font-size: 1.1em; }
+    .summary.pass { background: #0a3a0a; border: 1px solid #2ecc40; color: #2ecc40; }
+    .summary.fail { background: #3a0a0a; border: 1px solid #C41E3A; color: #E8294A; }
+    .suite { margin: 16px 0; }
+    .suite-name { color: #1A56DB; font-size: 1.05em; margin-bottom: 4px; }
+    .test { padding: 3px 0 3px 20px; font-size: 0.9em; }
+    .test.pass { color: #2ecc40; }
+    .test.pass::before { content: '✓ '; }
+    .test.fail { color: #E8294A; }
+    .test.fail::before { content: '✗ '; }
+    .error { color: #ff6b6b; padding-left: 36px; font-size: 0.82em; }
+  </style>
+</head>
+<body>
+  <h1>🎮 Classic Games Online — Test Runner</h1>
+  <div id="results">Running tests...</div>
+
+  <!-- Engine modules -->
+  <script src="../js/engine/game-loop.js"></script>
+  <script src="../js/engine/input.js"></script>
+  <script src="../js/engine/collision.js"></script>
+  <script src="../js/engine/particles.js"></script>
+  <script src="../js/engine/renderer.js"></script>
+  <script src="../js/engine/audio.js"></script>
+
+  <!-- Test framework -->
+  <script src="test-framework.js"></script>
+
+  <!-- Game modules -->
+  <script src="../js/games/breakout.js"></script>
+  <script src="../js/games/asteroids.js"></script>
+  <script src="../js/games/tetris.js"></script>
+
+  <!-- Test files -->
+  <script src="engine/game-loop.test.js"></script>
+  <script src="engine/input.test.js"></script>
+  <script src="engine/collision.test.js"></script>
+  <script src="engine/particles.test.js"></script>
+  <script src="engine/renderer.test.js"></script>
+  <script src="engine/audio.test.js"></script>
+  <script src="games/breakout.test.js"></script>
+  <script src="games/asteroids.test.js"></script>
+  <script src="games/tetris.test.js"></script>
+
+  <script>
+    (function () {
+      var report = window.TestFramework.run();
+      var container = document.getElementById('results');
+      var html = '';
+
+      var cls = report.failed === 0 ? 'pass' : 'fail';
+      html += '<div class="summary ' + cls + '">';
+      html += report.passed + ' passed, ' + report.failed + ' failed — ' + report.total + ' total';
+      html += '</div>';
+
+      // Group by suite
+      var suites = {};
+      for (var i = 0; i < report.results.length; i++) {
+        var r = report.results[i];
+        if (!suites[r.suite]) suites[r.suite] = [];
+        suites[r.suite].push(r);
+      }
+
+      for (var name in suites) {
+        html += '<div class="suite"><div class="suite-name">' + name + '</div>';
+        var tests = suites[name];
+        for (var j = 0; j < tests.length; j++) {
+          var t = tests[j];
+          html += '<div class="test ' + (t.passed ? 'pass' : 'fail') + '">' + t.test + '</div>';
+          if (t.error) {
+            html += '<div class="error">' + t.error + '</div>';
+          }
+        }
+        html += '</div>';
+      }
+
+      container.innerHTML = html;
+
+      // Expose for programmatic access
+      window.__TEST_RESULTS__ = report;
+    })();
+  </script>
+</body>
+</html>
