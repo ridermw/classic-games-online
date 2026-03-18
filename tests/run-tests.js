@@ -19,6 +19,8 @@ const gameFiles = [
   'js/games/breakout.js',
   'js/games/asteroids.js',
   'js/games/tetris.js',
+  'js/games/mario.js',
+  'js/games/flappy.js',
 ];
 
 const testFiles = [
@@ -32,6 +34,8 @@ const testFiles = [
   'tests/games/breakout.test.js',
   'tests/games/asteroids.test.js',
   'tests/games/tetris.test.js',
+  'tests/games/mario.test.js',
+  'tests/games/flappy.test.js',
 ];
 
 // Build combined script
