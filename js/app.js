@@ -8,35 +8,35 @@ const GAMES = [
     id: 'asteroids',
     name: 'Raider Space Defense',
     description: 'Defend the galaxy',
-    module: null,
+    module: () => window.Games && window.Games.Asteroids,
     thumbnail: drawAsteroidsThumbnail
   },
   {
     id: 'breakout',
     name: 'Raider Smash',
     description: 'Break every brick',
-    module: null,
+    module: () => window.Games && window.Games.Breakout,
     thumbnail: drawBreakoutThumbnail
   },
   {
     id: 'tetris',
     name: 'Raider Blocks',
     description: 'Stack and clear',
-    module: null,
+    module: () => window.Games && window.Games.Tetris,
     thumbnail: drawTetrisThumbnail
   },
   {
     id: 'flappy',
     name: 'Flappy Raider',
     description: 'Tap to survive',
-    module: null,
+    module: () => window.Games && window.Games.Flappy,
     thumbnail: drawFlappyThumbnail
   },
   {
     id: 'mario',
     name: 'Raider Run',
     description: 'Run and jump',
-    module: null,
+    module: () => window.Games && window.Games.Mario,
     thumbnail: drawMarioThumbnail
   }
 ];
@@ -121,6 +121,8 @@ function initNavigation() {
   });
 }
 
+let activeGameModule = null;
+
 function launchGame(game) {
   currentView = 'game';
   currentGame = game;
@@ -134,17 +136,30 @@ function launchGame(game) {
 
   if (gameName) gameName.textContent = game.name;
 
-  // TODO: Initialize actual game module on canvas
   const canvas = document.querySelector('.game-viewport__canvas');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    canvas.width = 800;
-    canvas.height = 600;
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  canvas.width = 800;
+  canvas.height = 600;
+
+  // Launch the actual game module
+  const mod = game.module();
+  if (mod && typeof mod.init === 'function') {
+    activeGameModule = mod;
+    mod.init(canvas, ctx);
+  } else {
     drawPlaceholder(ctx, 800, 600, game);
   }
 }
 
 function returnToLanding() {
+  // Destroy active game
+  if (activeGameModule && typeof activeGameModule.destroy === 'function') {
+    activeGameModule.destroy();
+  }
+  activeGameModule = null;
+
   currentView = 'landing';
   currentGame = null;
 
@@ -153,8 +168,6 @@ function returnToLanding() {
 
   viewport.classList.remove('active');
   landing.classList.remove('hidden');
-
-  // TODO: Destroy current game module
 }
 
 function drawPlaceholder(ctx, w, h, game) {
