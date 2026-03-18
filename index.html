@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Walton Raiders — Classic Games Arcade</title>
+  <meta name="description" content="Classic games built by GitHub Copilot CLI for Walton High School, Marietta GA. Play Asteroids, Tetris, Flappy Bird, Breakout, and more.">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/landing.css">
+  <link rel="stylesheet" href="css/game-ui.css">
+
+  <!-- Favicon: Raiders Red shield -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='24' font-size='24'>🛡️</text></svg>">
+</head>
+<body>
+  <!-- Background layers -->
+  <div class="bg-mesh" aria-hidden="true"></div>
+  <div class="bg-grain" aria-hidden="true"></div>
+
+  <!-- ============ LANDING PAGE ============ -->
+  <main class="landing" id="landing">
+
+    <!-- Hero -->
+    <header class="hero fade-up">
+      <h1 class="hero__school-name">Walton Raiders</h1>
+      <p class="hero__subtitle">Classic Games Arcade</p>
+      <p class="hero__tagline">// built entirely by ai — powered by github copilot cli</p>
+    </header>
+
+    <!-- Game Grid — Bento Layout -->
+    <section class="game-grid" aria-label="Select a game to play">
+
+      <!-- 1. Asteroids (hero card — spans 2 cols) -->
+      <article class="game-card fade-up" data-game="asteroids" tabindex="0" role="button" aria-label="Play Raider Space Defense">
+        <div class="game-card__inner">
+          <canvas class="game-card__thumbnail" aria-hidden="true"></canvas>
+          <div class="game-card__info">
+            <h2 class="game-card__name">Raider Space Defense</h2>
+            <span class="game-card__play">
+              Play <span class="game-card__play-arrow"></span>
+            </span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2. Breakout -->
+      <article class="game-card fade-up" data-game="breakout" tabindex="0" role="button" aria-label="Play Raider Smash">
+        <div class="game-card__inner">
+          <canvas class="game-card__thumbnail" aria-hidden="true"></canvas>
+          <div class="game-card__info">
+            <h2 class="game-card__name">Raider Smash</h2>
+            <span class="game-card__play">
+              Play <span class="game-card__play-arrow"></span>
+            </span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3. Tetris -->
+      <article class="game-card fade-up" data-game="tetris" tabindex="0" role="button" aria-label="Play Raider Blocks">
+        <div class="game-card__inner">
+          <canvas class="game-card__thumbnail" aria-hidden="true"></canvas>
+          <div class="game-card__info">
+            <h2 class="game-card__name">Raider Blocks</h2>
+            <span class="game-card__play">
+              Play <span class="game-card__play-arrow"></span>
+            </span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 4. Flappy Bird -->
+      <article class="game-card fade-up" data-game="flappy" tabindex="0" role="button" aria-label="Play Flappy Raider">
+        <div class="game-card__inner">
+          <canvas class="game-card__thumbnail" aria-hidden="true"></canvas>
+          <div class="game-card__info">
+            <h2 class="game-card__name">Flappy Raider</h2>
+            <span class="game-card__play">
+              Play <span class="game-card__play-arrow"></span>
+            </span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 5. Platformer -->
+      <article class="game-card fade-up" data-game="mario" tabindex="0" role="button" aria-label="Play Raider Run">
+        <div class="game-card__inner">
+          <canvas class="game-card__thumbnail" aria-hidden="true"></canvas>
+          <div class="game-card__info">
+            <h2 class="game-card__name">Raider Run</h2>
+            <span class="game-card__play">
+              Play <span class="game-card__play-arrow"></span>
+            </span>
+          </div>
+        </div>
+      </article>
+
+    </section>
+  </main>
+
+  <!-- ============ GAME VIEWPORT ============ -->
+  <div class="game-viewport" id="gameViewport">
+    <div class="game-viewport__vignette" aria-hidden="true"></div>
+    <canvas class="game-viewport__canvas" width="800" height="600"></canvas>
+    <div class="game-hud">
+      <div class="game-hud__item">
+        <span class="game-hud__label">Score</span>
+        <span class="game-hud__value" id="hudScore">0</span>
+      </div>
+      <div class="game-hud__item">
+        <span class="game-hud__label" id="hudGameTitle">—</span>
+      </div>
+    </div>
+    <div class="game-viewport__esc">esc — back to games</div>
+  </div>
+
+  <!-- ============ BOTTOM BAR ============ -->
+  <footer class="bottom-bar">
+    <div class="bottom-bar__badge">
+      <span class="bottom-bar__badge-dot" aria-hidden="true"></span>
+      Built by GitHub Copilot CLI — Walton High School, Marietta GA
+    </div>
+    <button class="bottom-bar__sound-toggle" aria-label="Toggle sound effects">
+      ♪ Sound Off
+    </button>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+</body>
+</html>
